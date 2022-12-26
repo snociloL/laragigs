@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Listing;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -40,6 +40,9 @@ Route::put('/listings/{listing}', [ListingController::class, 'update'])->middlew
 
 Route::delete('/listings/{listing}', [ListingController::class, 'destroy'])->middleware('auth');
 
+// Manage Listings
+Route::get('/listings/manage', [ListingController::class, 'manage'])->middleware('auth');
+
 // Single Listing
 Route::get('/listings/{listing}', [ListingController::class, 'show']);
 
@@ -57,6 +60,9 @@ Route::get('/login', [UserController::class, 'login'])->name('login')->middlewar
 
 // Log In User
 Route::post('/users/authenticate', [UserController::class, 'authenticate']);
+
+
+
 // Single listing
 
 // Route::get('/listings/{id}', function ($id) {
