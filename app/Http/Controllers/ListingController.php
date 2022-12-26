@@ -10,8 +10,8 @@ class ListingController extends Controller
 {
     //show all listing
     public function index() {
-        return view('listings.index', ['listings' => Listing::latest()->filter(request(['tag', 'search']))->get()
-        ]);
+        return view('listings.index', ['listings' => Listing::latest()->filter(request(['tag', 'search']))->paginate(5)
+        ]); // or simplePaginate()
     }
 
     public function show(Listing $listing) {
@@ -35,6 +35,10 @@ class ListingController extends Controller
             'tags' => 'required',
             'description' => 'required'
         ]);
+
+        if($request->hasFile('logo')) {
+            $formFields['logo'] = $request->file('logo')->store('logos', 'public');
+        }
 
         Listing::create($formFields);
         return redirect('/')->with('message', 'Listing created successfully!');
